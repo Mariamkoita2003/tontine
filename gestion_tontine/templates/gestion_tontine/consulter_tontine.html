@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Mes tontines</h1>
+    
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Tontines auxquelles je participe</h3>
+        </div>
+        <div class="card-body">
+            {% if tontines %}
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    {% for tontine in tontines %}
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">{{ tontine.nom }}</h5>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">{{ tontine.description|truncatechars:100 }}</p>
+                                <ul class="list-group list-group-flush mb-3">
+                                    <li class="list-group-item">
+                                        <strong>Montant cotisation:</strong> {{ tontine.montant_cotisation }} €
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Fréquence:</strong> {{ tontine.get_frequence_cotisation_display }}
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Début:</strong> {{ tontine.date_debut|date:"d/m/Y" }}
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Fin:</strong> {% if tontine.date_fin %}{{ tontine.date_fin|date:"d/m/Y" }}{% else %}En cours{% endif %}
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#" class="btn btn-outline-primary btn-sm">Voir plus de détails</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-info">
+                    Vous ne participez à aucune tontine pour le moment.
+                    <a href="{% url 'tontines_list' %}" class="alert-link">Découvrir les tontines disponibles</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="card mt-4">
+        <div class="card-header bg-secondary text-white">
+            <h3 class="mb-0">Tontines disponibles</h3>
+        </div>
+        <div class="card-body">
+            <div class="text-center">
+                <a href="{% url 'tontines_list' %}" class="btn btn-primary">
+                    Voir toutes les tontines disponibles
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

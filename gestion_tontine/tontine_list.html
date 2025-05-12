@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des tontines</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <!-- templates/gestion_tontine/tontines_list.html -->
+<div class="min-h-screen bg-cover bg-center" style="background-image: url('path_to_your_image.jpg');">
+    <div class="max-w-4xl mx-auto p-8 bg-white opacity-90 rounded-lg shadow-xl">
+        <h1 class="text-3xl font-extrabold text-center text-indigo-700 mb-6">Tontines Disponibles</h1>
+
+        <div class="space-y-6">
+            {% for tontine in tontines %}
+                <div class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-semibold">{{ tontine.name }}</h2>
+                    <p class="text-lg">Montant : {{ tontine.amount }} FCFA</p>
+                    <p>Nombre de membres : {{ tontine.members }}</p>
+                    <a href="{% url 'rejoindre_tontine' tontine.id %}" class="mt-4 inline-block text-white py-2 px-6 rounded-lg bg-blue-700 hover:bg-blue-800">
+                        Rejoindre cette tontine
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% if not user.is_authenticated %}
+    <p class="text-sm text-red-500">Vous devez être connecté pour rejoindre une tontine.</p>
+    <a href="{% url 'login' %}" class="inline-block text-white py-2 px-6 rounded-lg bg-blue-700 hover:bg-blue-800">Se connecter</a>
+{% endif %}
+    
+</body>
+</html>

@@ -1,13 +1,80 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard Tontine</title>
-    <link rel="stylesheet" href="{% static 'gestion_tontine/css/style.css' %}">
+    <title>Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Bienvenue dans ta tontine 👋</h1>
-    <p>Ceci est ta première page frontend intégrée à Django !</p>
+<body class="bg-gray-100">
+    <div class="max-w-6xl mx-auto p-8 bg-gray-50">
+        <h1 class="text-4xl font-extrabold text-center mb-10 text-gray-800">Bienvenue sur votre Dashboard, {{ membre.nom }} !</h1>
+
+        <!-- Si l'utilisateur est un gestionnaire -->
+        {% if is_gestionnaire %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Carte Total cotisé -->
+                <div class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-xl rounded-lg p-8 flex flex-col items-center">
+                    <h2 class="text-xl font-semibold mb-2">Total cotisé</h2>
+                    <p class="text-3xl font-bold">{{ total_cotise }} FCFA</p>
+                    <p class="text-sm mt-3 opacity-80">Le montant total que vous avez cotisé jusqu'à présent.</p>
+                </div>
+
+                <!-- Carte Mes Tontines -->
+                <div class="bg-gradient-to-r from-green-400 to-teal-500 text-white shadow-xl rounded-lg p-8 flex flex-col items-center">
+                    <h2 class="text-xl font-semibold mb-2">Mes Tontines</h2>
+                    <ul class="mt-4 text-sm text-gray-100 space-y-2">
+                        {% for p in participations %}
+                            <li class="border-b border-gray-200 py-2">{{ p.tontine.name }}</li>
+                        {% empty %}
+                            <li class="text-gray-300">Aucune tontine à afficher.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <!-- Carte Dernières Cotisations -->
+                <div class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white shadow-xl rounded-lg p-8 flex flex-col items-center">
+                    <h2 class="text-xl font-semibold mb-2">Dernières cotisations</h2>
+                    <ul class="mt-4 text-sm text-gray-100 space-y-2">
+                        {% for c in cotisations %}
+                            <li class="flex justify-between py-2 border-b border-gray-200">
+                                <span>{{ c.date_paiement }}</span> <span>{{ c.montant }} FCFA</span>
+                            </li>
+                        {% empty %}
+                            <li class="text-gray-300">Aucune cotisation pour le moment.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        <!-- Si l'utilisateur est un membre simple -->
+        {% else %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8">
+                <!-- Carte Mes Tontines -->
+                <div class="bg-gradient-to-r from-green-400 to-teal-500 text-white shadow-xl rounded-lg p-8 flex flex-col items-center">
+                    <h2 class="text-xl font-semibold mb-2">Mes Tontines</h2>
+                    <ul class="mt-4 text-sm text-gray-100 space-y-2">
+                        {% for p in participations %}
+                            <li class="border-b border-gray-200 py-2">{{ p.tontine.name }}</li>
+                        {% empty %}
+                            <li class="text-gray-300">Aucune tontine à afficher.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <!-- Carte Dernières Cotisations -->
+                <div class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white shadow-xl rounded-lg p-8 flex flex-col items-center">
+                    <h2 class="text-xl font-semibold mb-2">Dernières cotisations</h2>
+                    <ul class="mt-4 text-sm text-gray-100 space-y-2">
+                        {% for c in cotisations %}
+                            <li class="flex justify-between py-2 border-b border-gray-200">
+                                <span>{{ c.date_paiement }}</span> <span>{{ c.montant }} FCFA</span>
+                            </li>
+                        {% empty %}
+                            <li class="text-gray-300">Aucune cotisation pour le moment.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+    </div>
 </body>
 </html>
