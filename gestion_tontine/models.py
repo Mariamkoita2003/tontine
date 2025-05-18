@@ -64,3 +64,25 @@ class Cotisation(models.Model):
     
     def __str__(self):
         return f"{self.membre.nom} - {self.tontine.nom} - {self.montant} € - {self.date_paiement.strftime('%d/%m/%Y')}"
+
+class DemandeAdhesion(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    tontine = models.ForeignKey(Tontine, on_delete=models.CASCADE)
+    approuvee = models.BooleanField(default=False)
+    date_demande = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} → {self.tontine.nom}"
+    
+    
+    
+class MembreTontine(models.Model):
+        user = models.ForeignKey(User, on_delete=models.CASCADE)
+        tontine = models.ForeignKey(Tontine, on_delete=models.CASCADE)
+        date_adhesion = models.DateTimeField(auto_now_add=True)
+
+        class Meta:
+            unique_together = ('user', 'tontine')  # Un membre ne peut adhérer qu'une seule fois
+
+        def __str__(self):
+            return f"{self.user.username} est membre de {self.tontine.nom}"

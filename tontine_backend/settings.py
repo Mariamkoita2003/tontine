@@ -11,6 +11,7 @@ ALLOWED_HOSTS = []
 
 # 🔌 Applications installées
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -19,7 +20,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'gestion_tontine',
     'tailwind',
-    'theme',
+    
+    
    
 ]
 
@@ -68,12 +70,12 @@ WSGI_APPLICATION = 'tontine_backend.wsgi.application'
 # 🛢️ Configuration base de données
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'tontine_db',
-        'USER': 'root',
+        'USER': 'mamou',
         'PASSWORD': 'mamou',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'HOST': 'localhost',  # Ce sera le nom du service dans Docker (voir docker-compose)
+        'PORT': '5432',
     }
 }
 
@@ -117,5 +119,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # 🛠️ NPM pour Tailwind
 NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Sunu Natte",
+
+    "site_header": "Sunu Natte",
+
+    "site_brand": "Sunu Natte",
+    "copyright": "Mariama koita",
+ 
+}
 
 
