@@ -5,9 +5,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-bbpx$vlubc6$uid(zer4wccxot%cypnxxrr#+j*x(sc#q8yc+h'
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # 🔌 Applications installées
 INSTALLED_APPS = [
@@ -49,10 +49,7 @@ ROOT_URLCONF = 'tontine_backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(BASE_DIR, 'tontine_backend', 'theme', 'templates'),
-            os.path.join(BASE_DIR, 'gestion_tontine', 'templates'),  # <--- Ajout important
-        ],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

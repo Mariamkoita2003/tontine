@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .models import DemandeAdhesion, Tontine
+from django.shortcuts import render
+
 
 @login_required
 def demander_adhesion(request):
@@ -16,3 +18,7 @@ def demander_adhesion(request):
 
     tontines = Tontine.objects.all()
     return render(request, "demander_adhesion.html", {"tontines": tontines})
+
+
+def custom_404_view(request, exception):
+    return render(request, '404.html', status=404)

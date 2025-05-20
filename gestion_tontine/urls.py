@@ -19,4 +19,5 @@
 
 
 
+handler404 = 'gestion_tontine.views.404notefound'
 
